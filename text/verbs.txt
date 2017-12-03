@@ -1,0 +1,6 @@
+grow
+break
+harm
+destroy
+love
+connect

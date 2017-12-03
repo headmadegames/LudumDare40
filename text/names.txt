@@ -1,0 +1,18 @@
+%n
+%a %n
+%n is your %n
+No %n
+No one can %v You
+%x %n
+%x %n, many %n
+Running out of %n
+You only have %n
+You are the %n
+You are not the %n
+You control the %n, not the %n
+Only %x %n
+Limited %n
+Nothing is %a
+Everything is %a
+Nothing is a %n
+Everything is a %n

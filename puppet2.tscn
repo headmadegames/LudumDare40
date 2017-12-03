@@ -1,0 +1,482 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://player.gd" type="Script" id=1]
+[ext_resource path="res://pickableBody.gd" type="Script" id=2]
+[ext_resource path="res://pusher.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/body.png" type="Texture" id=4]
+[ext_resource path="res://assets/arm.png" type="Texture" id=5]
+[ext_resource path="res://shape/rect.tres" type="Shape2D" id=6]
+[ext_resource path="res://assets/head.png" type="Texture" id=7]
+
+[sub_resource type="CapsuleShape2D" id=1]
+
+custom_solver_bias = 0.0
+radius = 36.8678
+height = 46.9185
+
+[sub_resource type="RectangleShape2D" id=2]
+
+custom_solver_bias = 0.0
+extents = Vector2( 50.6781, 7.41595 )
+
+[sub_resource type="Animation" id=3]
+
+resource_name = "walk"
+length = 1.5
+loop = true
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("limb/Position2D:dir")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 20, -5 ), Vector2( 0.2, -1 ) ]
+}
+
+[sub_resource type="CapsuleShape2D" id=4]
+
+custom_solver_bias = 0.0
+radius = 16.9105
+height = 20.0
+
+[node name="puppet" type="Node2D"]
+
+position = Vector2( 641.735, 380.584 )
+script = ExtResource( 1 )
+isPlayer = false
+color = Color( 0.6, 0.2, 0.2, 1 )
+
+[node name="body" type="RigidBody2D" parent="." groups=[
+"fail",
+]]
+
+position = Vector2( -1.12219, 0.966927 )
+input_pickable = true
+collision_layer = 16400
+collision_mask = 16400
+mode = 0
+mass = 2.0
+friction = 1.0
+bounce = 0.0
+gravity_scale = 1.0
+custom_integrator = false
+continuous_cd = 0
+contacts_reported = 0
+contact_monitor = false
+sleeping = false
+can_sleep = true
+linear_velocity = Vector2( 0, 0 )
+linear_damp = 5.0
+angular_velocity = 0.0
+angular_damp = 20.0
+script = ExtResource( 2 )
+
+[node name="Position2D" parent="body" instance=ExtResource( 3 )]
+
+dir = Vector2( 0, 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="body"]
+
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="body/CollisionShape2D"]
+
+texture = ExtResource( 4 )
+
+[node name="rightArm" type="PinJoint2D" parent="body"]
+
+position = Vector2( 32.8035, -33.906 )
+node_a = NodePath("..")
+node_b = NodePath("limb")
+bias = 0.0
+disable_collision = true
+softness = 2.0
+
+[node name="limb" type="RigidBody2D" parent="body/rightArm" groups=[
+"fail",
+]]
+
+position = Vector2( 49.1164, -17.5577 )
+rotation = -1.10041
+input_pickable = true
+collision_layer = 17
+collision_mask = 17
+mode = 0
+mass = 1.0
+friction = 1.0
+bounce = 0.0
+gravity_scale = 1.0
+custom_integrator = false
+continuous_cd = 0
+contacts_reported = 0
+contact_monitor = false
+sleeping = false
+can_sleep = true
+linear_velocity = Vector2( 0, 0 )
+linear_damp = -1.0
+angular_velocity = 0.0
+angular_damp = -1.0
+script = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="body/rightArm/limb"]
+
+position = Vector2( -6.08527, -8.62833 )
+rotation = 0.721601
+shape = SubResource( 2 )
+__meta__ = {
+"_edit_ik_": true
+}
+
+[node name="Sprite" type="Sprite" parent="body/rightArm/limb/CollisionShape2D"]
+
+position = Vector2( 0.680115, -0.706787 )
+rotation = 3.16055
+texture = ExtResource( 5 )
+
+[node name="leftArm" type="PinJoint2D" parent="body"]
+
+position = Vector2( -32.4272, -33.0587 )
+node_a = NodePath("..")
+node_b = NodePath("limb")
+bias = 0.0
+disable_collision = true
+softness = 2.0
+
+[node name="limb" type="RigidBody2D" parent="body/leftArm" groups=[
+"fail",
+]]
+
+position = Vector2( -52.6151, -20.8961 )
+rotation = 1.17999
+input_pickable = true
+collision_layer = 1
+collision_mask = 1
+mode = 0
+mass = 1.0
+friction = 1.0
+bounce = 0.0
+gravity_scale = 1.0
+custom_integrator = false
+continuous_cd = 0
+contacts_reported = 0
+contact_monitor = false
+sleeping = false
+can_sleep = true
+linear_velocity = Vector2( 0, 0 )
+linear_damp = -1.0
+angular_velocity = 0.0
+angular_damp = -1.0
+script = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="body/leftArm/limb"]
+
+position = Vector2( 7.41998, -10.6144 )
+rotation = 2.37743
+shape = SubResource( 2 )
+__meta__ = {
+"_edit_ik_": true
+}
+
+[node name="Sprite" type="Sprite" parent="body/leftArm/limb/CollisionShape2D"]
+
+position = Vector2( 1.8266, -0.42305 )
+rotation = -3.14438
+texture = ExtResource( 5 )
+
+[node name="rightLeg" type="PinJoint2D" parent="body"]
+
+position = Vector2( 17.365, 47.8743 )
+node_a = NodePath("..")
+node_b = NodePath("limb")
+bias = 0.0
+disable_collision = true
+softness = 2.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="body/rightLeg"]
+
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+root_node = NodePath("..")
+anims/walk = SubResource( 3 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = ""
+
+[node name="limb" type="RigidBody2D" parent="body/rightLeg"]
+
+position = Vector2( 28.6228, 24.884 )
+input_pickable = true
+collision_layer = 2
+collision_mask = 2
+mode = 0
+mass = 1.0
+friction = 1.0
+bounce = 0.0
+gravity_scale = 1.0
+custom_integrator = false
+continuous_cd = 0
+contacts_reported = 0
+contact_monitor = false
+sleeping = false
+can_sleep = true
+linear_velocity = Vector2( 0, 0 )
+linear_damp = -1.0
+angular_velocity = 0.0
+angular_damp = -1.0
+script = ExtResource( 2 )
+
+[node name="Position2D" parent="body/rightLeg/limb" instance=ExtResource( 3 )]
+
+position = Vector2( 23.69, 20.93 )
+dir = Vector2( 0, 0 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="body/rightLeg/limb"]
+
+editor/display_folded = true
+position = Vector2( -0.427429, -1.13278 )
+rotation = 0.721601
+shape = ExtResource( 6 )
+__meta__ = {
+"_edit_ik_": true
+}
+
+[node name="Sprite" type="Sprite" parent="body/rightLeg/limb/CollisionShape2D"]
+
+position = Vector2( 5.63989, -0.705292 )
+rotation = 0.0143442
+scale = Vector2( 0.75474, 1.28817 )
+texture = ExtResource( 5 )
+
+[node name="rightCalf" type="PinJoint2D" parent="body/rightLeg/limb"]
+
+position = Vector2( 26.3411, 21.8832 )
+node_a = NodePath("..")
+node_b = NodePath("limb")
+bias = 0.0
+disable_collision = true
+softness = 2.0
+
+[node name="limb" type="RigidBody2D" parent="body/rightLeg/limb/rightCalf"]
+
+position = Vector2( -24.3467, 26.6176 )
+rotation = 0.764148
+input_pickable = true
+collision_layer = 49
+collision_mask = 49
+mode = 0
+mass = 1.0
+friction = 1.0
+bounce = 0.0
+gravity_scale = 1.0
+custom_integrator = false
+continuous_cd = 0
+contacts_reported = 0
+contact_monitor = false
+sleeping = false
+can_sleep = true
+linear_velocity = Vector2( 0, 0 )
+linear_damp = -1.0
+angular_velocity = 0.0
+angular_damp = -1.0
+script = ExtResource( 2 )
+
+[node name="Position2D" parent="body/rightLeg/limb/rightCalf/limb" instance=ExtResource( 3 )]
+
+position = Vector2( -0.822144, 40.7101 )
+dir = Vector2( 0, 10 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="body/rightLeg/limb/rightCalf/limb"]
+
+position = Vector2( -1.70575, 4.9873 )
+rotation = 1.56754
+shape = ExtResource( 6 )
+__meta__ = {
+"_edit_ik_": true
+}
+
+[node name="Sprite" type="Sprite" parent="body/rightLeg/limb/rightCalf/limb/CollisionShape2D"]
+
+position = Vector2( -2.97522, -0.374146 )
+rotation = 0.0126917
+scale = Vector2( 0.87943, 1.28817 )
+texture = ExtResource( 5 )
+
+[node name="leftLeg" type="PinJoint2D" parent="body"]
+
+position = Vector2( -16.1642, 47.8743 )
+node_a = NodePath("..")
+node_b = NodePath("limb")
+bias = 0.0
+disable_collision = true
+softness = 2.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="body/leftLeg"]
+
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+root_node = NodePath("..")
+anims/walk = SubResource( 3 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = ""
+
+[node name="limb" type="RigidBody2D" parent="body/leftLeg"]
+
+position = Vector2( -22.8197, 22.1765 )
+rotation = 1.64092
+input_pickable = true
+collision_layer = 2
+collision_mask = 2
+mode = 0
+mass = 1.0
+friction = 1.0
+bounce = 0.0
+gravity_scale = 1.0
+custom_integrator = false
+continuous_cd = 0
+contacts_reported = 0
+contact_monitor = false
+sleeping = false
+can_sleep = true
+linear_velocity = Vector2( 0, 0 )
+linear_damp = -1.0
+angular_velocity = 0.0
+angular_damp = -1.0
+script = ExtResource( 2 )
+
+[node name="Position2D" parent="body/leftLeg/limb" instance=ExtResource( 3 )]
+
+position = Vector2( 23.69, 20.93 )
+dir = Vector2( 0, 0 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="body/leftLeg/limb"]
+
+position = Vector2( -0.427429, -1.13278 )
+rotation = 0.721601
+shape = ExtResource( 6 )
+__meta__ = {
+"_edit_ik_": true
+}
+
+[node name="Sprite" type="Sprite" parent="body/leftLeg/limb/CollisionShape2D"]
+
+position = Vector2( 5.00241, -0.32959 )
+rotation = -0.000797266
+scale = Vector2( 0.75474, 1.28817 )
+texture = ExtResource( 5 )
+
+[node name="leftCalf" type="PinJoint2D" parent="body/leftLeg/limb"]
+
+position = Vector2( 26.3411, 21.8832 )
+rotation = -1.72755
+node_a = NodePath("..")
+node_b = NodePath("limb")
+bias = 0.0
+disable_collision = true
+softness = 2.0
+
+[node name="limb" type="RigidBody2D" parent="body/leftLeg/limb/leftCalf"]
+
+position = Vector2( 22.0957, 26.749 )
+rotation = -0.679327
+input_pickable = true
+collision_layer = 17
+collision_mask = 17
+mode = 0
+mass = 1.0
+friction = 1.0
+bounce = 0.0
+gravity_scale = 1.0
+custom_integrator = false
+continuous_cd = 0
+contacts_reported = 0
+contact_monitor = false
+sleeping = false
+can_sleep = true
+linear_velocity = Vector2( 0, 0 )
+linear_damp = -1.0
+angular_velocity = 0.0
+angular_damp = -1.0
+script = ExtResource( 2 )
+
+[node name="Position2D" parent="body/leftLeg/limb/leftCalf/limb" instance=ExtResource( 3 )]
+
+position = Vector2( 0.991455, 43.6807 )
+dir = Vector2( 0, 10 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="body/leftLeg/limb/leftCalf/limb"]
+
+position = Vector2( 1.40952, 5.00293 )
+rotation = 1.56754
+shape = ExtResource( 6 )
+__meta__ = {
+"_edit_ik_": true
+}
+
+[node name="Sprite" type="Sprite" parent="body/leftLeg/limb/leftCalf/limb/CollisionShape2D"]
+
+position = Vector2( -1.534, 0.588226 )
+rotation = -0.00970161
+scale = Vector2( 0.87943, 1.28817 )
+texture = ExtResource( 5 )
+
+[node name="head" type="RigidBody2D" parent="." groups=[
+"fail",
+]]
+
+position = Vector2( -1.4682, -74.5821 )
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+mode = 0
+mass = 1.0
+friction = 1.0
+bounce = 0.0
+gravity_scale = 1.0
+custom_integrator = false
+continuous_cd = 0
+contacts_reported = 0
+contact_monitor = false
+sleeping = false
+can_sleep = true
+linear_velocity = Vector2( 0, 0 )
+linear_damp = -1.0
+angular_velocity = 0.0
+angular_damp = -1.0
+
+[node name="pusher" parent="head" instance=ExtResource( 3 )]
+
+dir = Vector2( 0, -10 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="head"]
+
+editor/display_folded = true
+shape = SubResource( 4 )
+
+[node name="Sprite" type="Sprite" parent="head/CollisionShape2D"]
+
+self_modulate = Color( 0.832031, 0.718277, 0.650024, 1 )
+z = 1
+z_as_relative = false
+texture = ExtResource( 7 )
+
+[node name="joint" type="PinJoint2D" parent="head"]
+
+position = Vector2( 0.492859, 18.4995 )
+node_a = NodePath("..")
+node_b = NodePath("../../body")
+bias = 0.9
+disable_collision = true
+softness = 1.0
+
+[connection signal="draw" from="." to="." method="_on_puppet_draw"]
+
+[connection signal="draw" from="body" to="body" method="_on_body_draw"]
+
+

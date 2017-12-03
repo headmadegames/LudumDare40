@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://drawnSprite.gd" type="Script" id=1]
+
+[sub_resource type="ImageTexture" id=1]
+
+flags = 7
+size = Vector2( 80, 120 )
+storage = 0
+lossy_quality = 0.7
+
+[node name="drawnSprite" type="Sprite"]
+
+texture = SubResource( 1 )
+script = ExtResource( 1 )
+width = 100
+height = 100
+
+[connection signal="draw" from="." to="." method="_on_drawnSprite_draw"]
+
+
